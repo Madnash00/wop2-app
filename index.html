@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>WOP · Weekly Operational Pressure</title>
+  <title>WOP 2.0 · Weekly Operational Pressure</title>
   <script>/* r38 · applica la vista negozio prima del primo rendering */
 if(new URLSearchParams(location.search).get('mode')==='store-calendar')document.documentElement.classList.add('wop-store-read-only');
 </script>
@@ -450,7 +450,7 @@ if(new URLSearchParams(location.search).get('mode')==='store-calendar')document.
 <body>
 <div class="app">
   <aside class="sidebar" id="sidebar">
-    <div class="brand"><div class="brand-mark">W</div><div><strong>WOP</strong><small>Operational Pressure</small></div></div>
+    <div class="brand"><div class="brand-mark">W</div><div><strong>WOP 2.0</strong><small>Operational Pressure</small></div></div>
     <nav class="nav" id="nav">
       <button class="active" data-view="dashboard"><span class="ico">◫</span><span>Dashboard</span></button>
       <button data-view="calendar"><span class="ico">▦</span><span>Calendario</span></button>
@@ -460,11 +460,11 @@ if(new URLSearchParams(location.search).get('mode')==='store-calendar')document.
       <button data-view="uco"><span class="ico">∑</span><span>Metodo UCO</span></button>
       <button data-view="settings"><span class="ico">⚙</span><span>Regole e dati</span></button>
     </nav>
-    <div class="side-foot"><b>Weekly Operational Pressure</b><br>Governare il carico. Proteggere l’execution.<br><br>Versione v5.7</div>
+    <div class="side-foot"><b>Weekly Operational Pressure</b><br>Governare il carico. Proteggere l’execution.<br><br>Versione v5.7-wop2</div>
   </aside>
   <main>
     <header class="topbar">
-      <div style="display:flex;align-items:center;gap:11px"><button class="mobile-menu" id="mobileMenu">☰</button><h1 id="topTitle">Dashboard</h1><span class="app-version">v5.7</span></div>
+      <div style="display:flex;align-items:center;gap:11px"><button class="mobile-menu" id="mobileMenu">☰</button><h1 id="topTitle">Dashboard</h1><span class="app-version">v5.7-wop2</span></div>
       <div class="top-actions"><span class="date-pill" id="todayLabel"></span><button class="btn" id="quickPrint">Crea PDF</button><button class="btn dark" id="quickExcel">Crea Excel</button></div>
     </header>
     <div class="content">
@@ -607,9 +607,9 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 (() => {
   'use strict';
   const WOP_STORE_READ_ONLY=new URLSearchParams(window.location.search).get('mode')==='store-calendar';
-  const KEY='wop-webapp-v1.4';
+  const KEY='wop2-webapp-v1.4';
   const SYNC_META_KEY=KEY+'-drive-sync-v2';
-  const REMOTE_ENDPOINT='https://script.google.com/macros/s/AKfycbzLyBt63vWqbQA_I1PBYPapghEHmHl3bCtwa2j6IcRK-lKa2_1KYsD5TFb1Otr-r3kT/exec';
+  const REMOTE_ENDPOINT='https://script.google.com/macros/s/AKfycbxkJxaCrnbcSrKe_haXth4lhZcN-YIUXSWMMl3oiJjYHZcrnULWN28BURkZNICaJByzkw/exec';
   const REMOTE_ACTOR='Utente anonimo';
   const seed=JSON.parse(document.getElementById('seed-data').textContent);
   const DATASET_VERSION=seed.databaseVersion||'wop-xlsx-v2.4-2026-07-22';
@@ -1092,7 +1092,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function exportYear(year){const d=state.scores[year],ts=totals(year);let table='<table border="1"><tr><th>Leva</th>'+d.weeks.map(w=>'<th>'+w+'</th>').join('')+'</tr>'+cats.map(c=>'<tr><td>'+c+'</td>'+d.categories[c].map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('')+'<tr><td><b>PRESSIONE SETTIMANALE</b></td>'+ts.map(v=>'<td><b>'+v+'</b></td>').join('')+'</tr></table>';download('WOP_matrice_'+year+'.xls','<html><meta charset="utf-8"><body>'+table+'</body></html>','application/vnd.ms-excel')}
   function exportComparison(){const ctx=analysisContext();if(!ctx.years.length){toast('Seleziona almeno un periodo da esportare');return}const current=ctx.years.at(-1),base=ctx.years.length>1?ctx.years[0]:null,heads=base?['Leva','Media '+current,'Media '+base,'Delta','Delta %']:['Leva','Media '+current],rows=cats.map(c=>{const x=categoryAverage(current,c,ctx.indices[current]);if(!base)return[c,x];const y=categoryAverage(base,c,ctx.indices[base]),d=x-y;return[c,x,y,d,y?d/y:0]});download('WOP_confronto_'+current+(base?'_vs_'+base:'')+'.csv','\ufeff'+[heads,...rows].map(r=>r.map(csvCell).join(';')).join('\n'),'text/csv;charset=utf-8')}
 
-  const APP_VERSION='v5.7';
+  const APP_VERSION='v5.7-wop2';
   const exportPageNames={dashboard:'Dashboard',calendar:'Calendario operativo',activities:'Registro attività',planning:'Pianificazione WOP',analysis:'Analisi e confronto',uco:'Metodo UCO',settings:'Regole e dati'};
   function activeViewKey(){return $('.view.active')?.id.replace('view-','')||'dashboard'}
   function selectedText(id){const el=$('#'+id);return el?.selectedOptions?.[0]?.textContent?.trim()||el?.value||'—'}
